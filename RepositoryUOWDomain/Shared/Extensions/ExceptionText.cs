@@ -4,7 +4,7 @@ public static class ExceptionText
 {
     public static async Task<string?> ToErrorStr(this Exception? ex, CancellationToken token = default)
     {
-        string? errorStr = "";
+        string errorStr = "";
         Exception? tmpEx = ex;
 
         await Task.Run(() =>
@@ -14,7 +14,7 @@ public static class ExceptionText
                 errorStr += $"{tmpEx.Message}{Environment.NewLine}";
                 tmpEx = tmpEx.InnerException;
             }
-        }, token);
+        }, token).ConfigureAwait(false);
         return errorStr;
     }
 }

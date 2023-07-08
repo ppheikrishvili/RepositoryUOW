@@ -12,10 +12,9 @@ public static class ThreadExtension
         var repLists = list.Chunk(10000).AsParallel().WithDegreeOfParallelism(
                       Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0))).ToList();
 
-        var tasks = from partition in repLists
-                .Select((jobs, i) => new { jobs, i })
+        var tasks = from partition in repLists.Select((jobs, i) => new { jobs, i })
                     select Task.Run(async () =>
-                    {
+                    { 
                         try
                         {
                             await throttler.WaitAsync(token);

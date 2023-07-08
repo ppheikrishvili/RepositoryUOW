@@ -1,11 +1,10 @@
-﻿
-using System.Net;
+﻿using System.Net;
 
 namespace RepositoryUOWDomain.ValueObject;
 
 public class ExceptionDetail
 {
-    public HttpStatusCode StatusCoDe { get; set; }
+    public HttpStatusCode StatusCode { get; set; }
 
     public string? Message { get; set; }
 }
