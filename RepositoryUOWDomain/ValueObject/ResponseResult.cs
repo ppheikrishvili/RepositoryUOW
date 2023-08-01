@@ -25,13 +25,9 @@ public class ResponseResult<T> : IResponseResult<T>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool IsServiceError
     {
-        get
-        {
-            if (string.IsNullOrWhiteSpace(ResponseStr)) return false;
-            if ((ResponseCode != ResponseCodeEnum.Notification) && (ResponseCode != ResponseCodeEnum.Success))
-                return true;
-            return false;
-        }
+        get =>
+            !string.IsNullOrWhiteSpace(ResponseStr) && (ResponseCode != ResponseCodeEnum.Notification) &&
+            (ResponseCode != ResponseCodeEnum.Success);
         set { }
     }
 
