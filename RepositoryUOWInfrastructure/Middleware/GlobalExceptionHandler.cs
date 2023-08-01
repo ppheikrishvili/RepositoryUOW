@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using System.Net;
 using Newtonsoft.Json;
 using RepositoryUOWDomain.Shared.Extensions;
-using RepositoryUOWDomain.ValueObject;
 using System.Text;
 
 namespace RepositoryUOWInfrastructure.Middleware;
@@ -21,15 +20,14 @@ public class GlobalExceptionHandler : IMiddleware
         ILogger<GlobalExceptionHandler>? logger)
     {
         string errorMessage = await ex.ToErrorStr() ?? "";
-
-        logger?.LogError($"Exception details: {errorMessage}");
-
-        var result = JsonConvert.SerializeObject(new ExceptionDetail
-            {StatusCode = HttpStatusCode.InternalServerError, Message = errorMessage});
-
+        logger?.LogError($"{nameof(Exception)} details: {errorMessage}");
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
-        await context.Response.WriteAsync(result).ConfigureAwait(false);
+        await context.Response.WriteAsync(JsonConvert.SerializeObject(new
+        {
+            StatusCode = HttpStatusCode.InternalServerError,
+            Message = errorMessage
+        })).ConfigureAwait(false);
     }
 
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)

@@ -1,10 +1,12 @@
 using RepositoryUOWInfrastructure.Extension;
 using RepositoryUOWInfrastructure.Middleware;
+
 //using RepositoryUOWService.Extensions;
 
 //private AppSettings AppSettings { get; set; }
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 
